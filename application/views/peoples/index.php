@@ -1,40 +1,35 @@
 <div class="container">
-    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <a href="<?= base_url(); ?>mahasiswa/tambah" class="btn btn-primary">Tambah Data Mahasiswa</a>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <form action="" method="post">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Cari data mahasiswa.." name="keyword">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Cari</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <h3><?= $judul; ?></h3>
-            <?php if (empty($poples)) : ?>
-                <div class="alert alert-danger" role="alert">
-                    Data mahasiswa <?= $this->input->post('keyword'); ?> tidak ditemukan.
-                </div>
-            <?php endif; ?>
-            <ul class="list-group">
-                <?php foreach ($peoples as $p) : ?>
-                    <li class="list-group-item">
-                        <?= $p["name"]; ?>
-                        <a href="<?= base_url(); ?>mahasiswa/hapus/<?= $p['id']; ?>" class="badge badge-danger float-right hapus">Hapus</a>
-                        <a href="<?= base_url(); ?>mahasiswa/ubah/<?= $p['id']; ?>" class="badge badge-success float-right">Ubah</a>
-                        <a href="<?= base_url(); ?>mahasiswa/detail/<?= $p['id']; ?>" class="badge badge-primary float-right">Detail</a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="mt-3"><?= $judul; ?></h3>
+
+            <div class="flash-data1" data-flashdata1="<?= $this->session->flashdata('flash1'); ?>"></div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1;
+                    foreach ($peoples as $p) : ?>
+                        <tr>
+                            <th><?= $i++; ?></th>
+                            <td><?= $p['name']; ?></td>
+                            <td><?= $p['email']; ?></< /td>
+                            <td>
+                                <a href="<?= base_url('peoples/detail/' . $p['id'] . ''); ?>" class="badge badge-warning">detail</a>
+                                <a href="<?= base_url('peoples/edit/' . $p['id'] . ''); ?>" class="badge badge-success">edit</a>
+                                <a href="<?= base_url('peoples/delete/' . $p['id'] . ''); ?>" class="badge badge-danger delete">delete</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
