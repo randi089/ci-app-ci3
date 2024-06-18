@@ -6,45 +6,30 @@ class Peoples extends CI_Controller
     {
         $data['judul'] = 'List of Peoples';
 
-        $tot_rows = $this->peoples->countAllPeoples();
+        if ($this->input->post('submit')) {
+            $data['keyword'] = $this->input->post('keyword');
+            $this->session->set_userdata('keyword', $data['keyword']);
+        } else {
+            $data['keyword'] = $this->session->userdata('keyword');
+        }
+
+        // Cari
+        $this->db->like('name', $data['keyword']);
+        $this->db->or_like('email', $data['keyword']);
+        $this->db->from('peoples');
+        $data['tot_rows'] = $this->db->count_all_results();
 
         // pagination config
         $config = [
-            'base_url' => 'http://localhost/ci-app/peoples/index',
-            'total_rows' => $tot_rows,
-            'per_page' => 12,
-            'num_links' => 5,
-
-            'full_tag_open' => '<nav><ul class="pagination">',
-            'full_tag_close' => '</ul></nav>',
-
-            'first_tag_open' => '<li class="page-item">',
-            'first_tag_close' => '</li>',
-
-            'last_tag_open' => '<li class="page-item">',
-            'last_tag_close' => '</li>',
-
-            'next_link' => '&raquo',
-            'next_tag_open' => '<li class="page-item">',
-            'next_tag_close' => '</li>',
-
-            'prev_link' => '&laquo',
-            'prev_tag_open' => '<li class="page-item">',
-            'prev_tag_close' => '</li>',
-
-            'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
-            'cur_tag_close' => '</a></li>',
-
-            'num_tag_open' => '<li class="page-item">',
-            'num_tag_close' => '</li>',
-
-            'attributes' => array('class' => 'page-link')
+            'total_rows' => $data['tot_rows'],
+            'per_page' => 8,
         ];
+
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
 
         $data['start'] = $this->uri->segment(3);
-        $data['peoples'] = $this->peoples->getPeoples($config['per_page'], $data['start']);
+        $data['peoples'] = $this->peoples->getPeoples($config['per_page'], $data['start'], $data['keyword']);
         $this->load->view('templates/header', $data);
         $this->load->view('peoples/index', $data);
         $this->load->view('templates/footer');
