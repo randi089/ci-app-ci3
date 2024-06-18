@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h3 class="mt-3"><?= $judul; ?></h3>
+            <h3 class="my-3"><?= $judul; ?></h3>
 
             <div class="flash-data1" data-flashdata1="<?= $this->session->flashdata('flash1'); ?>"></div>
 
@@ -15,10 +15,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1;
-                    foreach ($peoples as $p) : ?>
+                    <?php foreach ($peoples as $p) : ?>
                         <tr>
-                            <th><?= $i++; ?></th>
+                            <th><?= ++$start; ?></th>
                             <td><?= $p['name']; ?></td>
                             <td><?= $p['email']; ?></< /td>
                             <td>
@@ -30,6 +29,11 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <div class="row justify-content-center my-4">
+                <div class="column">
+                    <?= $pagination; ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
