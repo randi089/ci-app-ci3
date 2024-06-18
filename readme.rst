@@ -1,8 +1,9 @@
 ###################
-Apa yang Terbaru?
+Apa yang Baru?
 ###################
 
 - Menambahkan fitur Pagination.
+- Menambahkan fitur Cari.
 
 *******************
 Release Information
